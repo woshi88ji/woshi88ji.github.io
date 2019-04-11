@@ -449,32 +449,33 @@
 				}
 			});
 			//给需要长按保存图片的img标签设置 class='saveImg'
-				var divs = document.getElementsByClassName('saveImg');
-				for (var i = 0; i < divs.length; i++) {
-					divs[i].addEventListener('longtap', function () {
-						//开启弹框
-						mui('#picture').popover('toggle');
-						var imgurl = this.src;
-						document.getElementById('saveImg').addEventListener('tap', function () {
-							var imgDtask = plus.downloader.createDownload(imgurl, { method: 'GET' }, function (d, status) {
-								if (status == 200) {
-									plus.gallery.save(d.filename, function () {//保存到相册
-										plus.io.resolveLocalFileSystemURL(d.filename, function (enpty) {
-											// 关闭弹框
-											mui('#picture').popover('toggle');
-											mui.toast('保存成功')
-										});
+				//给需要长按保存图片的img标签设置 class='saveImg'
+					var divs = document.getElementsByClassName('saveImg');
+					for (var i = 0; i < divs.length; i++) {
+						divs[i].addEventListener('longtap', function () {
+							//开启弹框
+							mui('#picture').popover('toggle');
+							var imgurl = this.src;
+							document.getElementById('saveImg').addEventListener('tap', function () {
+								var imgDtask = plus.downloader.createDownload(imgurl, { method: 'GET' }, function (d, status) {
+									if (status == 200) {
+										plus.gallery.save(d.filename, function () {//保存到相册
+											plus.io.resolveLocalFileSystemURL(d.filename, function (enpty) {
+												// 关闭弹框
+												mui('#picture').popover('toggle');
+												mui.toast('保存成功')
+											});
 
-									})
-								} else {
-									mui.toast('保存失败')
-								}
+										})
+									} else {
+										mui.toast('保存失败')
+									}
+								});
+								imgDtask.start();
 							});
-							imgDtask.start();
-						});
 
-					})
-				}
+						})
+					}
 	</script>
 </body>
 </html>
