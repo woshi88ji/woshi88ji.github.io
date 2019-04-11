@@ -22,7 +22,7 @@
 </head>
 <body>
 	<header>
-		<div class='content clearfix '>
+		<div class='content clearfix ' >
 			<a href="" class='logo1 fl'><i class="iconfont icon-hengpai"></i></a>
 			<a href="" class='fl logo2'><img src="image/header/logo.png" alt="起飞页" width='102px' height='33px'/></a>
 			<ul class='fl clearfix'>
@@ -156,7 +156,7 @@
 		</div>
 		<div class="section4">
 			<div class='sec4-content clearfix'>
-				<div class='sec4-img fr'><img src="image/section/section4/pic4.png"  data-preview-src="" class='saveImg' data-preview-group="1" width='100%' height='100%' /></div>
+				<div class='sec4-img fr'><img src="image/section/section4/pic4.png"  data-preview-src="" data-preview-group="1" width='100%' height='100%' /></div>
 				<div class='sec4-word fl'>
 					<p>真正的响应式自助建站，自适应所有设备</p>
 					<p>不同于其它假响应式品牌，起飞页采用的是真正的响应式引擎。您只需对网站资料进行一次性输入，网站即可根据访问者的设备智能地呈现出最佳效果，全程无需人工干预。设备包括但不限于：计算机、Pad、微信、手机和电视。</p>
@@ -419,7 +419,7 @@
 				 <p class='f-siz12'>版权所有 2013-2018 苏州卡达网络科技有限公司</p>
 			</div>
 			
-			<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom" style="z-index: 99999999">
+			<div id="picture"  style="z-index: 99999999; position: fixed; width: 80%; height: 200px;background: green">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell">
 							<a href="javascript:;" id="saveImg">保存图片</a>
@@ -451,120 +451,31 @@
 			//给需要长按保存图片的img标签设置 class='saveImg'
 				var divs = document.getElementsByClassName('saveImg');
 				for (var i = 0; i < divs.length; i++) {
-					divs[i].addEventListener('longtap', function (e) {
-						var target = e.target;
-						savePic(target);
+					divs[i].addEventListener('longtap', function () {
+						//开启弹框
+						mui('#picture').popover('toggle');
+						var imgurl = this.src;
+						document.getElementById('saveImg').addEventListener('tap', function () {
+							var imgDtask = plus.downloader.createDownload(imgurl, { method: 'GET' }, function (d, status) {
+								if (status == 200) {
+									plus.gallery.save(d.filename, function () {//保存到相册
+										plus.io.resolveLocalFileSystemURL(d.filename, function (enpty) {
+											// 关闭弹框
+											mui('#picture').popover('toggle');
+											mui.toast('保存成功')
+										});
+
+									})
+								} else {
+									mui.toast('保存失败')
+								}
+							});
+							imgDtask.start();
+						});
 
 					})
 				}
-				function savePic(target) {
-						if (target.tagName == 'IMG' && target.currentSrc.length > 0) { //确保图片链接不为空
-							var imgUrl = target.src;
-							var suffix = cutImageSuffix(imgUrl);
-							mui.confirm("是否保存此图片", "", ["保存", "取消"], function (event) {
-								var index = event.index;
-								if (index == 0) {
-									var downLoader = plus.downloader.createDownload(imgUrl, {
-										method: 'GET',
-										filename: '_downloads/image' + suffix
-									}, function (download, status) {
-										var fileName = download.filename;
-										console.log('文件名:' + fileName);
-										console.log('下载状态：' + status);
-										plus.gallery.save(fileName, function () {
-											mui.confirm("打开相册查看", "", ["打开", "取消"], function (event) {
-												var gindex = event.index;
-												if (gindex == 0) {
-													plus.gallery.pick(function (file) {
-														mui.toast("你选择了图片：" + file);
-													}, function (error) {
-														console.log(JSON.stringify(error));
-													}, {
-
-														});
-												}
-											});
-										});
-									});
-									downLoader.start();
-								}
-							});
-						}
-					}
-					// 截取图片后缀用于重命名图片，防止%E5%85%89%E6%98%8E%E8%A1%8C编码的文件不被系统相册识别；
-					function cutImageSuffix(imageUrl) {
-						var index = imageUrl.lastIndexOf('.');
-						return imageUrl.substring(index);
-					}
 	</script>
-
-	<!-- <script>
-		mui.init({
-			gestureConfig: {
-				tap: true, //默认为true
-				doubletap: true, //默认为false
-				longtap: true, //默认为false
-				swipe: true, //默认为true
-				drag: true, //默认为true
-				hold: true,//默认为false，不监听
-				release: false//默认为false，不监听
-			}
-		});
-		//给需要长按保存图片的img标签设置 class='saveImg'
-			mui.plusReady(function () {
-				document.addEventListener('longtap', function (e) {
-					var target = e.target;
-					savePic(target);
-				});
-			});
-
-			/**
-			 * 长按保存图片
-			 * 1. 获取图片链接
-			 * 2. 创建下载并下载图片
-			 * 3. 保存至相册
-			 */
-			function savePic(target) {
-				if (target.tagName == 'IMG' && target.currentSrc.length > 0 && target.classList.contains('mui-zoom')) { //确保图片链接不为空
-					var imgUrl = target.src;
-					console.log('图片地址：' + imgUrl);
-					var suffix = cutImageSuffix(imgUrl);
-					mui.confirm("是否保存此图片", "", ["保存", "取消"], function (event) {
-						var index = event.index;
-						if (index == 0) {
-							var downLoader = plus.downloader.createDownload(imgUrl, {
-								method: 'GET',
-								filename: '_downloads/image' + suffix
-							}, function (download, status) {
-								var fileName = download.filename;
-								console.log('文件名:' + fileName);
-								console.log('下载状态：' + status);
-								plus.gallery.save(fileName, function () {
-									mui.confirm("打开相册查看", "", ["打开", "取消"], function (event) {
-										var gindex = event.index;
-										if (gindex == 0) {
-											plus.gallery.pick(function (file) {
-												mui.toast("你选择了图片：" + file);
-											}, function (error) {
-												console.log(JSON.stringify(error));
-											}, {
-
-												});
-										}
-									});
-								});
-							});
-							downLoader.start();
-						}
-					});
-				}
-			}
-			// 截取图片后缀用于重命名图片，防止%E5%85%89%E6%98%8E%E8%A1%8C编码的文件不被系统相册识别；
-			function cutImageSuffix(imageUrl) {
-				var index = imageUrl.lastIndexOf('.');
-				return imageUrl.substring(index);
-			}
-	</script> -->
 </body>
 </html>
 
