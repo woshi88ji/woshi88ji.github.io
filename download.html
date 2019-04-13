@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>download</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    .bgc{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('./timg.jpg');
+        background-size: cover;
+    }
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin: 70px auto 0;
+        width: 70%;
+    }
+    .left {
+        width: 300px;
+        border-radius: 60px;
+        overflow: hidden;
+        height: auto;
+    }
+    .left img{
+        margin-left: -2px;
+        margin-top: -2px;
+    }
+    .right {
+        width: 300px;
+        height: 550px;
+        padding: 10px;
+        margin-top: 20px;
+        /* background: #eee; */
+    }
+    .r-top {
+        width:260px;
+        height: 320px;
+        margin: 10px auto;
+        color:white;
+    }
+    .r-top p{
+        text-align: center;
+        margin-top: 10px;
+    }
+    .r-bottom {
+        display: block;
+        margin: auto;
+        width: 260px;
+        height: 70px;
+        border: 2px solid #ccc;
+        border-radius: 40px;
+        text-decoration: none;
+        margin-bottom: 20px;
+        background: rgb(9, 191, 236);
+    }
+
+    .r-bottom p{
+        display: inline-block; 
+        margin-top: 15px;
+        margin-left: 30px;  
+        color: white;
+    }
+    .r-bottom:active {
+        background: rgb(10, 230, 120);
+    }
+    @media screen and (max-width: 767px) {
+        .r-top {
+            display: none
+        }
+        .right {
+            position: absolute;
+            top: calc(50% - 90px);
+            height: auto;
+        }
+        .content {
+            margin-top: 40px;
+        }
+    }
+</style>
+<body class='bgc'>
+    <div class='content'>
+        <div class='left' >
+            <img src="./phone.png" width="100%" >
+        </div>
+        <div class='right'>
+            <div class='r-top'>
+                <img src="./code.jpg" width='100%' >
+                <p>打开手机扫描下载app</p>
+            </div>
+           <a class='r-bottom' id='android'  href="https://d.bilibili.com/download_app.html?bsource=app_bili">
+               <img src="./Android.png" width='40px' height="40px" style='display: inline-block;margin-left: 30px'>
+               <p ><span >download</span><br><span style='font-size:20px'>安卓 apk</span></p>
+           </a>
+            <a class='r-bottom' id='ios' href="http://gtd.bestgtd.cn/ios_apps/demo/ios_down.html">
+                <img src="./Apple.png" width='40px' height="40px" style='display: inline-block;margin-left: 30px'>
+                <p><span>download</span><br><span style='font-size:20px'>苹果 IPA</span></p>
+            </a>
+        </div>
+    
+    </div>
+    <script>
+
+        function isWeiXin() {
+                var ua = window.navigator.userAgent.toLowerCase();
+                console.log(ua);//mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
+                if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        var issafariBrowser = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+        window.onload = () => {
+            if (isWeiXin()) {
+                let img = document.createElement('img')
+                img.src = './wechat.png'
+                img.width='100%'
+                img.height = '100%'
+                document.body.innerHTML = img
+                return 
+            } else {
+                var u = navigator.userAgent, app = navigator.appVersion;
+                var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+                var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+                if (isAndroid) {
+                    document.getElementById('android').click()
+                }
+                if (isIOS) {
+                    //这个是ios操作系统
+                    if (issafariBrowser) {
+                        document.getElementById('ios').click()
+                    } else {
+                        let body = document.body
+                        body.innerText = '请用Safari浏览器打开!'
+                        body.style.background = 'none'
+                    }
+
+                }
+            }
+           
+        }
+    </script>
+    <script>
+        //判断是否微信登陆
+        
+        
+    </script>
+</body>
+</html>
