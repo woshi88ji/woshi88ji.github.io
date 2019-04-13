@@ -146,19 +146,16 @@
 			<div class='sec3-content clearfix'>
 				<div class='sec3-img fl'><img src="image/section/section3/pic2.png" width='100%' height='100%' /></div>
 				<div class='sec3-word fr'>
-					<p>基于H5模板，快速搭建一个响应式网站1111111111111</p>
+					<p>基于H5模板，快速搭建一个响应式网站</p>
 					<p>起飞页™代表着当今响应式自助建站技术的最高水平，没有之一。我们的网站构建器，将传统的编码工作转化为直观的拖拽操作和文字录入。在这里，您仅需花上10分钟便可以完成一个H5响应式网站，您会发现完全不需要编写一行代码，这就是起飞页自助建站的神奇之处。</p>
 				</div>
 			</div>
 		</div>
-		<div id='junwen'>
-			<input type="password" />junwen
-		</div>
 		<div class="section4">
 			<div class='sec4-content clearfix'>
-				<div class='sec4-img fr'><img src="image/section/section4/pic4.png"   data-preview-src="" data-preview-group="1" width='100%' height='100%' /></div>
+				<div class='sec4-img fr'><img src="image/section/section4/pic4.png"   width='100%' height='100%' /></div>
 				<div class='sec4-word fl'>
-					<p>真正的响应式自助建dsffsd站，自适应所有设备999qqqqqqq9</p>
+					<p>真正的响应式自助建站，自适应所有设备</p>
 					<p>不同于其它假响应式品牌，起飞页采用的是真正的响应式引擎。您只需对网站资料进行一次性输入，网站即可根据访问者的设备智能地呈现出最佳效果，全程无需人工干预。设备包括但不限于：计算机、Pad、微信、手机和电视。</p>
 				</div>
 			</div>
@@ -418,65 +415,9 @@
 				 <img src="image/footer/pic7.png" style='display:block ;margin:5px auto;' width='32' height='45' alt="" />
 				 <p class='f-siz12'>版权所有 2013-2018 苏州卡达网络科技有限公司</p>
 			</div>
-			
-			<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom" style="z-index: 99999999;position:fixed;top:100px;left: 100px">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							<a href="javascript:;" id="saveImg">保存ssssd图片</a>
-						</li>
-					</ul>
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							<a href="#picture"><b>取消</b></a>
-						</li>
-					</ul>
-				</div>
 		</footer>
 	</section>
 	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
-	<!-- <script src="js/mui.zoom.js" type="text/javascript" charset="utf-8"></script> -->
-	<!-- <script src="js/mui.previewimage.js" type="text/javascript" charset="utf-8"></script> -->
-	<!-- <script>
-		 mui.init({
-				gestureConfig: {
-					tap: true, //默认为true
-					doubletap: true, //默认为false
-					longtap: true, //默认为false
-					swipe: true, //默认为true
-					drag: true, //默认为true
-					hold: true,//默认为false，不监听
-					release: false//默认为false，不监听
-				}
-			});
-			//给需要长按保存图片的img标签设置 class='saveImg'
-				//给需要长按保存图片的img标签设置 class='saveImg'
-					var divs = document.getElementsByClassName('saveImg');
-					for (var i = 0; i < divs.length; i++) {
-						divs[i].addEventListener('longtap', function () {
-							//开启弹框
-							mui('#picture').popover('toggle');
-							var imgurl = this.src;
-							document.getElementById('saveImg').addEventListener('tap', function () {
-								var imgDtask = plus.downloader.createDownload(imgurl, { method: 'GET' }, function (d, status) {
-									if (status == 200) {
-										plus.gallery.save(d.filename, function () {//保存到相册
-											plus.io.resolveLocalFileSystemURL(d.filename, function (enpty) {
-												// 关闭弹框
-												mui('#picture').popover('toggle');
-												mui.toast('保存成功')
-											});
-
-										})
-									} else {
-										mui.toast('保存失败')
-									}
-								});
-								imgDtask.start();
-							});
-
-						})
-					}
-	</script> -->
 	<script>
 		 mui.init({
 				gestureConfig: {
@@ -503,7 +444,7 @@
 			 * 3. 保存至相册
 			 */
 			function savePic(target) {
-				if (target.tagName == 'IMG' && target.currentSrc.length > 0) { //确保图片链接不为空
+				if (target.tagName == 'IMG' && target.currentSrc.length > 0 ) { //确保图片链接不为空
 					var imgUrl = target.src;
 					console.log('图片地址：' + imgUrl);
 					var suffix = cutImageSuffix(imgUrl);
@@ -557,6 +498,23 @@
 			function cutImageSuffix(imageUrl) {
 				var index = imageUrl.lastIndexOf('.');
 				return imageUrl.substring(index);
+			}
+	</script>
+	<script>
+		//判断是否微信登陆
+			function isWeiXin() {
+				var ua = window.navigator.userAgent.toLowerCase();
+				console.log(ua);//mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
+				if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+					return true;
+				} else {
+					return false;
+				}
+			}
+			if (isWeiXin()) {
+				document.body.style.display = 'none'
+			} else {
+				console.log("不是来自微信内置浏览器")
 			}
 	</script>
 </body>
