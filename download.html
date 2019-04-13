@@ -124,11 +124,8 @@
         var issafariBrowser = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
         window.onload = () => {
             if (isWeiXin()) {
-                let img = document.createElement('img')
-                img.src = './wechat.png'
-                img.width='100%'
-                img.height = '100%'
-                document.body.innerHTML = img
+                 document.body.style.backgroundImage = "url(./wechat.png) "
+                document.body.innerHTML = null
                 return 
             } else {
                 var u = navigator.userAgent, app = navigator.appVersion;
