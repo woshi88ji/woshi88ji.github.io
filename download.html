@@ -12,6 +12,7 @@
         padding: 0;
     }
     .bgc{
+        display: none;
         position: absolute;
         top: 0;
         left: 0;
@@ -127,8 +128,10 @@
             if (isWeiXin()) {
                  document.body.style.backgroundImage = "url(./wechat.png) "
                 document.body.innerHTML = null
+                document.body.style.display = 'block'
                 return 
             } else {
+                document.body.style.display = 'block'
                 var u = navigator.userAgent, app = navigator.appVersion;
                 var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
                 var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
