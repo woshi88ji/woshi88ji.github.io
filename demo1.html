@@ -512,11 +512,10 @@
 					return false;
 				}
 			}
-			if (isWeiXin()) {
-				alert('111')
+			if (!isWeiXin()) {
 				document.body.style.display = 'block'
 			} else {
-				alert("不是来自微信内置浏览器")
+				alert("是来自微信内置浏览器")
 			}
 		</script>
 </body>
