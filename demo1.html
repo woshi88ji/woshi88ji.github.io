@@ -31,7 +31,7 @@
 		 */
 		function savePic(target) {
 			if (target.tagName == 'IMG' && target.currentSrc.length > 0 && target.id === 'image') { //确保图片链接不为空
-				console.log('s')
+				alert('s')
 				var imgUrl = target.src;
 				console.log('图片地址：' + imgUrl);
 				var suffix = cutImageSuffix(imgUrl);
