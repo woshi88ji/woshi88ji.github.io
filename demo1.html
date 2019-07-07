@@ -6,29 +6,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
-	<link rel="stylesheet" type="text/css" href="css/mui.min.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="css/mui.min.css" /> -->
 </head>
 
 <body>
 	<img src="./1080.png" id='image'>
-	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<!-- <script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script> -->
 	<script>
 
 		document.getElementById('image').onclick = (e) => {
 			let target = e.target
 			savePic(target);
 		}
-		mui.init({
-			gestureConfig: {
-				longtap: true//默认为false
+		document.addEventListener("plusready", onPlusReady, false);
+			var r = null;
+			// 扩展API加载完毕，现在可以正常调用扩展API 
+			function onPlusReady() {
 			}
-		});
-		mui.plusReady(function () {
-			document.addEventListener('longtap', function (e) {
-				var target = e.target;
-				savePic(target);
-			});
-		});
 		/**
 		 * 长按保存图片
 		 * 1. 获取图片链接
@@ -41,7 +35,7 @@
 				var imgUrl = target.src;
 				console.log('图片地址：' + imgUrl);
 				var suffix = cutImageSuffix(imgUrl);
-				mui.confirm("是否保存此图片", "", ["保存", "取消"], function (event) {
+				confirm("是否保存此图片", "", ["保存", "取消"], function (event) {
 					var index = event.index;
 					if (index == 0) {
 						/**
@@ -63,14 +57,14 @@
 								/**
 								 * 保存后，弹出对话框是否查看；
 								 */
-								mui.confirm("打开相册查看", "", ["打开", "取消"], function (event) {
+								confirm("打开相册查看", "", ["打开", "取消"], function (event) {
 									var gindex = event.index;
 									if (gindex == 0) {
 										/**
 										 * 选择图片
 										 */
 										plus.gallery.pick(function (file) {
-											mui.toast("你选择了图片：" + file);
+										alert('456')
 										}, function (error) {
 											console.log(JSON.stringify(error));
 										}, {
