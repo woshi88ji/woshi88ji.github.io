@@ -44,13 +44,13 @@
 						}, function (download, status) {
 							var fileName = download.filename;
 							if (status == 200) {
-								alert("Download success: " + download.filename);
-							} else {
-								alert("Download failed: " + status);
-							}
 							plus.gallery.save(fileName, function () {
-								alert('下载成功!')
-							});
+									alert('下载成功!')
+								});
+							} else {
+								alert("下载失败, 请重试!");
+							}
+							
 						});
 						/**
 						 * 开始下载任务
