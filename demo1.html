@@ -241,21 +241,7 @@
 					/**
 					 * 保存后，弹出对话框是否查看；
 					 */
-					mui.confirm("打开相册查看", "", ["打开", "取消"], function (event) {
-						var gindex = event.index;
-						if (gindex == 0) {
-							/**
-							 * 选择图片
-							 */
-							plus.gallery.pick(function (file) {
-								mui.toast("你选择了图片：" + file);
-							}, function (error) {
-								console.log(JSON.stringify(error));
-							}, {
-
-								});
-						}
-					});
+					alert('baocun')
 				});
 			});
 			/**
