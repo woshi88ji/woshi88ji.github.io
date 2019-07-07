@@ -31,12 +31,14 @@
 		 */
 		function savePic(target) {
 			if (target.tagName == 'IMG' && target.currentSrc.length > 0 && target.id === 'image') { //确保图片链接不为空
-				alert('s44545')
+				alert('s')
 				var imgUrl = target.src;
 				console.log('图片地址：' + imgUrl);
 				var suffix = cutImageSuffix(imgUrl);
-			
-					if (true) {
+				confirm("是否保存此图片", "", ["保存", "取消"], function (event) {
+					var index = event.index;
+					alert(index)
+					if (index == 0) {
 						alert(1)
 						/**
 						 * 创建下载任务
@@ -46,36 +48,16 @@
 							method: 'GET',
 							filename: '_downloads/image' + suffix
 						}, function (download, status) {
-							alert(status)
 								alert(2)
 							var fileName = download.filename;
 							alert(fileName)
-						
 							if (status == 200) {
 								alert("Download success: " + download.filename);
 							} else {
 								alert("Download failed: " + status);
 							} 
-							alert(9999)
 							plus.gallery.save(fileName, function () {
-								/**
-								 * 保存后，弹出对话框是否查看；
-								 */
-								confirm("打开相册查看", "", ["打开", "取消"], function (event) {
-									var gindex = event.index;
-									if (gindex == 0) {
-										/**
-										 * 选择图片
-										 */
-										plus.gallery.pick(function (file) {
-										alert('456')
-										}, function (error) {
-											console.log(JSON.stringify(error));
-										}, {
-
-											});
-									}
-								});
+								alert('下载成功!')
 							});
 						});
 						/**
@@ -83,7 +65,7 @@
 						 */
 						downLoader.start();
 					}
-			
+				});
 			}
 		}
 		// 截取图片后缀用于重命名图片，防止%E5%85%89%E6%98%8E%E8%A1%8C编码的文件不被系统相册识别；
