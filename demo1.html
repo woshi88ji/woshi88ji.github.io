@@ -7,10 +7,10 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<!-- <link rel="stylesheet" type="text/css" href="css/mui.min.css" /> -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
-	<!-- <script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script> -->
+	<link rel="stylesheet" type="text/css" href="css/mui.min.css" />
+	<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script> -->
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <style>
@@ -115,10 +115,6 @@
 		})
 
 
-		document.getElementById('image').onclick = (e) => {
-			let src = e.target.src
-			savePic(src);
-		}
 		mui.init({
 			gestureConfig: {
 				longtap: true//默认为false
