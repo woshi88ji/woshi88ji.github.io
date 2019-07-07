@@ -6,199 +6,93 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<!-- <link rel="stylesheet" type="text/css" href="css/mui.min.css" /> -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
-	<!-- <script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script> -->
+	<link rel="stylesheet" type="text/css" href="css/mui.min.css" />
 </head>
 
-<style>
-	* {
-    padding: 0;
-    margin: 0;
-  }
-  body  {
-    background-color: #ff7700;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23c70202' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%23ca6767' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23b91c3b' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%23b2344c' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23a33c60' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%23a32752' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23963165' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%23a90c5b' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23b8549b' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%23b07aa1' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%23843284' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%237d3f7d' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
-    background-attachment: fixed;
-    background-size: cover;
-  }
-  header {
-    text-align: center;
-    font-size: 24px;
-    height: 50px;
-    line-height: 50px;
-    /* background-color: orange; */
-    color: white
-  }
-  input {
-    height: 25px;
-    width: 100px;
-    border-radius: 3px; 
-    border: none;
-    text-indent: 1em;
-  }
-  input:focus {
-    outline: none;
-    border-bottom-color: blue 
-  }
- 
-  .content {
-    width: 90%; 
-    margin:100px auto
-  }
-  .content  p {
-    height: 50px;
-    line-height: 50px;
-  } 
-  .price {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-  }
-  .price span {
-    display: inline-block
-  }
-  .btn {
-    display: inline-block;
-    height: 30px;
-    line-height: 30px;
-    padding: 0 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: red;
-  }
-  .dialog {
-    position: absolute;
-    display: none;
-    background-color: black;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.4;
-    color: white
-  }
-  .dialog div {
-    position: absolute;
-    top:calc(50% - 20px);
-    height: 40px;
-    width: 100px;
-    line-height: 40px;
-    text-align: center;
-    left: calc(50% - 50px);
-  }
-</style>
-
 <body>
-	<header>支付订单</header>
+	<img src="./1080.png" id='image'>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
 
-	<div class="content" id="sec1">
-		<div class="price"><span style="width: 90px">支付金额：</span> <input type="number" id="priceText"></input></div>
-		<div style="display: flex; align-items: center">
-			<div style="width: 90px">
-				<p>支付方式：</p>
-			</div>
-			<div style="width: 70%">
-				<select id="select" class="js-example-basic-single">
-					<option value="wechat">微信支付</option>
-					<option value="apay">支付宝支付</option>
-				</select>
-			</div>
-
-
-		</div>
-		<p style="text-align: right">
-			<span class="btn" id="submit">确认</span>
-		</p>
-
-	</div>
-
-	<div class="content" id="sec2">
-		<div style="width: 50%; margin: 0 auto">
-
-			<img width="100%" id="downloadImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562490396179&di=b9ed2ed6c9ab202a2ebd0270b973e32e&imgtype=0&src=http%3A%2F%2Fimg.mpaypass.com.cn%2Fimages%2F20170120090443.png"
-			 alt="">
-
-
-		</div>
-		<div style="width: 80%; margin: 20px auto; display: flex; justify-content: space-around">
-			<a class="btn" style="margin-right: 20px; display: none" id="purchase" target="_blank">立即购买</a>
-			<span class="btn download" download="qrcode">保存二维码</span>
-		</div>
-	</div>
-
-
-	<div class="dialog">
-		<div>加载中...</div>
-	</div>
-
-
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$(".js-example-basic-single").select2({
-				language: "zh-CN",
-				minimumResultsForSearch: -1,
-				width: "100%"
+		document.getElementById('image').onclick = (e) => {
+			let target = e.target
+			savePic(target);
+		}
+		mui.init({
+			gestureConfig: {
+				longtap: true//默认为false
+			}
+		});
+		mui.plusReady(function () {
+			document.addEventListener('longtap', function (e) {
+				var target = e.target;
+				savePic(target);
 			});
 		});
+		/**
+		 * 长按保存图片
+		 * 1. 获取图片链接
+		 * 2. 创建下载并下载图片
+		 * 3. 保存至相册
+		 */
+		function savePic(target) {
+			if (target.tagName == 'IMG' && target.currentSrc.length > 0 && target.id === 'image') { //确保图片链接不为空
+				console.log('s')
+				var imgUrl = target.src;
+				console.log('图片地址：' + imgUrl);
+				var suffix = cutImageSuffix(imgUrl);
+				mui.confirm("是否保存此图片", "", ["保存", "取消"], function (event) {
+					var index = event.index;
+					if (index == 0) {
+						/**
+						 * 创建下载任务
+						 * http://www.html5plus.org/doc/zh_cn/downloader.html#plus.downloader.createDownload
+						 */
+						var downLoader = plus.downloader.createDownload(imgUrl, {
+							method: 'GET',
+							filename: '_downloads/image' + suffix
+						}, function (download, status) {
+							var fileName = download.filename;
+							console.log('文件名:' + fileName);
+							console.log('下载状态：' + status);
+							/**
+							 * 保存至本地相册
+							 */
+							plus.gallery.save(fileName, function () {
+								/**
+								 * 保存后，弹出对话框是否查看；
+								 */
+								mui.confirm("打开相册查看", "", ["打开", "取消"], function (event) {
+									var gindex = event.index;
+									if (gindex == 0) {
+										/**
+										 * 选择图片
+										 */
+										plus.gallery.pick(function (file) {
+											mui.toast("你选择了图片：" + file);
+										}, function (error) {
+											console.log(JSON.stringify(error));
+										}, {
 
-		// 点击下载按钮下载图片
-		$(".download").on("click", function () {
-			var img = document.getElementById("downloadImg");
-
-			var alink = document.createElement("a");
-
-			alink.href = img.src;
-			alink.download = 'xiazai'
-			alink.click();
-
-		})
-
-		$("#submit").on("click", () => {
-			var payType = $("#select").val();
-			var price = $("#priceText").val()
-			$(".dialog").show()
-
-			$.ajax({
-				type: "post",
-				url: "",
-				data: `type=${payType}&price=${price}`,
-				success(msg) {
-					// 输入框隐藏
-					$("#sec1").hide()
-					// 图片框显示
-					$("#sec2").show()
-
-
-					// type = 1 直接跳转
-					if (msg.data.type == 1) {
-						// form替换图片框
-						$("#sec2").replaceAll(msg.data.data)
-					} else {
-						// 设置图片二维码路径
-						var imgUrl = msg.data.data
-						$("#downloadImg").attr("src", imgUrl)
-
-						// 是否是支付宝, url不为空是支付宝
-						if (msg.data.url.length > 0) {
-							$("#purchase").show()
-							$("#purchase").attr("href", msg.data.url)
-						}
+											});
+									}
+								});
+							});
+						});
+						/**
+						 * 开始下载任务
+						 */
+						downLoader.start();
 					}
-
-				},
-				error(err) {
-
-				},
-				complete() {
-					$(".dialog").hide()
-				}
-			})
-		})
+				});
+			}
+		}
+		// 截取图片后缀用于重命名图片，防止%E5%85%89%E6%98%8E%E8%A1%8C编码的文件不被系统相册识别；
+		function cutImageSuffix(imageUrl) {
+			var index = imageUrl.lastIndexOf('.');
+			return imageUrl.substring(index);
+		}
 	</script>
-
 </body>
 
 </html>
