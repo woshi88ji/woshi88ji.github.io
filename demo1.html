@@ -18,11 +18,7 @@
 			let target = e.target
 			savePic(target);
 		}
-		document.addEventListener("plusready", onPlusReady, false);
-			var r = null;
-			// 扩展API加载完毕，现在可以正常调用扩展API 
-			function onPlusReady() {
-			}
+		
 		/**
 		 * 长按保存图片
 		 * 1. 获取图片链接
@@ -30,11 +26,14 @@
 		 * 3. 保存至相册
 		 */
 		function savePic(target) {
+			document.addEventListener("plusready", onPlusReady, false);
+			// 扩展API加载完毕，现在可以正常调用扩展API 
+			function onPlusReady() {
+			}
 			if (target.tagName == 'IMG' && target.currentSrc.length > 0 && target.id === 'image') { //确保图片链接不为空
-				alert('s')
 				var imgUrl = target.src;
 				var suffix = cutImageSuffix(imgUrl);
-
+				
 				(function() {
 					var result = confirm('是否保存图片')
 					if(result) {
