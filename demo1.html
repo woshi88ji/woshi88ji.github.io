@@ -34,6 +34,7 @@
 				alert('s')
 				var imgUrl = target.src;
 				var suffix = cutImageSuffix(imgUrl);
+
 				(function() {
 					var result = confirm('是否保存图片')
 					if(result) {
@@ -56,7 +57,7 @@
 						 */
 						downLoader.start();
 					}
-				})
+				})()
 			}
 		}
 		// 截取图片后缀用于重命名图片，防止%E5%85%89%E6%98%8E%E8%A1%8C编码的文件不被系统相册识别；
