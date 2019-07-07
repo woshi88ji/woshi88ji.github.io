@@ -39,7 +39,7 @@
 					if(result) {
 						var downLoader = plus.downloader.createDownload(imgUrl, {
 							method: 'GET',
-							filename: '_downloads/image' + suffix
+							filename: '_downloads/image'+ new Date().getTime() + suffix
 						}, function (download, status) {
 							var fileName = download.filename;
 							if (status == 200) {
