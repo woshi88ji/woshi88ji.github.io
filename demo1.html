@@ -33,29 +33,20 @@
 			if (target.tagName == 'IMG' && target.currentSrc.length > 0 && target.id === 'image') { //确保图片链接不为空
 				alert('s')
 				var imgUrl = target.src;
-				console.log('图片地址：' + imgUrl);
 				var suffix = cutImageSuffix(imgUrl);
-				confirm("是否保存此图片", "", ["保存", "取消"], function (event) {
-					var index = event.index;
-					alert(index)
-					if (index == 0) {
-						alert(1)
-						/**
-						 * 创建下载任务
-						 * http://www.html5plus.org/doc/zh_cn/downloader.html#plus.downloader.createDownload
-						 */
+				(function() {
+					var result = confirm('是否保存图片')
+					if(result) {
 						var downLoader = plus.downloader.createDownload(imgUrl, {
 							method: 'GET',
 							filename: '_downloads/image' + suffix
 						}, function (download, status) {
-								alert(2)
 							var fileName = download.filename;
-							alert(fileName)
 							if (status == 200) {
 								alert("Download success: " + download.filename);
 							} else {
 								alert("Download failed: " + status);
-							} 
+							}
 							plus.gallery.save(fileName, function () {
 								alert('下载成功!')
 							});
@@ -65,7 +56,7 @@
 						 */
 						downLoader.start();
 					}
-				});
+				})
 			}
 		}
 		// 截取图片后缀用于重命名图片，防止%E5%85%89%E6%98%8E%E8%A1%8C编码的文件不被系统相册识别；
