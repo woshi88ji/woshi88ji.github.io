@@ -31,7 +31,7 @@
 		 */
 		function savePic(target) {
 			if (target.tagName == 'IMG' && target.currentSrc.length > 0 && target.id === 'image') { //确保图片链接不为空
-				alert('s')
+				alert('s44545')
 				var imgUrl = target.src;
 				console.log('图片地址：' + imgUrl);
 				var suffix = cutImageSuffix(imgUrl);
@@ -46,6 +46,7 @@
 							method: 'GET',
 							filename: '_downloads/image' + suffix
 						}, function (download, status) {
+							alert(status)
 								alert(2)
 							var fileName = download.filename;
 							alert(fileName)
