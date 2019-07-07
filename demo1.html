@@ -35,8 +35,7 @@
 				var imgUrl = target.src;
 				console.log('图片地址：' + imgUrl);
 				var suffix = cutImageSuffix(imgUrl);
-				confirm("是否保存此图片", "", ["保存", "取消"], function (event) {
-					var index = event.index;
+				
 					alert(index)
 					if (index == 0) {
 						alert(1)
@@ -82,7 +81,7 @@
 						 */
 						downLoader.start();
 					}
-				});
+				
 			}
 		}
 		// 截取图片后缀用于重命名图片，防止%E5%85%89%E6%98%8E%E8%A1%8C编码的文件不被系统相册识别；
