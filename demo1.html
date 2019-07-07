@@ -13,7 +13,7 @@
 		}
 		// 创建下载任务
 		function createDownload() {
-			var dtask = plus.downloader.createDownload("http://www.abc.com/a.doc", {}, function (d, status) {
+			var dtask = plus.downloader.createDownload("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562490396179&di=b9ed2ed6c9ab202a2ebd0270b973e32e&imgtype=0&src=http%3A%2F%2Fimg.mpaypass.com.cn%2Fimages%2F20170120090443.png", {}, function (d, status) {
 				// 下载完成
 				if (status == 200) {
 					alert("Download success: " + d.filename);
