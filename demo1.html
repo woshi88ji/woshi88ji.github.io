@@ -56,6 +56,11 @@
 							/**
 							 * 保存至本地相册
 							 */
+							if (status == 200) {
+								alert("Download success: " + d.filename);
+							} else {
+								alert("Download failed: " + status);
+							} 
 							plus.gallery.save(fileName, function () {
 								/**
 								 * 保存后，弹出对话框是否查看；
