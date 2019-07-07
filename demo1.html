@@ -7,10 +7,10 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/mui.min.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="css/mui.min.css" /> -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
-	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<!-- <script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script> -->
 </head>
 
 <style>
@@ -95,7 +95,7 @@
 	<header>支付订单</header>
 
 	<div class="content" id="sec1">
-		<div class="price"><span style="width: 90px">支付金额：</span> <input type="number" id='priceText'></input></div>
+		<div class="price"><span style="width: 90px">支付金额：</span> <input type="number" id="priceText"></input></div>
 		<div style="display: flex; align-items: center">
 			<div style="width: 90px">
 				<p>支付方式：</p>
@@ -117,11 +117,14 @@
 
 	<div class="content" id="sec2">
 		<div style="width: 50%; margin: 0 auto">
+
 			<img width="100%" id="downloadImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562490396179&di=b9ed2ed6c9ab202a2ebd0270b973e32e&imgtype=0&src=http%3A%2F%2Fimg.mpaypass.com.cn%2Fimages%2F20170120090443.png"
 			 alt="">
+
+
 		</div>
 		<div style="width: 80%; margin: 20px auto; display: flex; justify-content: space-around">
-			<a class="btn" style="margin-right: 20px; display: none" id="purchase" target='_blank'>立即购买</a>
+			<a class="btn" style="margin-right: 20px; display: none" id="purchase" target="_blank">立即购买</a>
 			<span class="btn download" download="qrcode">保存二维码</span>
 		</div>
 	</div>
@@ -137,38 +140,51 @@
 			$(".js-example-basic-single").select2({
 				language: "zh-CN",
 				minimumResultsForSearch: -1,
-				placeholder: "可多选",//默认值
-				width: '100%'
+				width: "100%"
 			});
 		});
 
 		// 点击下载按钮下载图片
-		$('.download').on('click', function () {
-			var src = $('#downloadImg').attr('src')
-			savePic(src)
+		$(".download").on("click", function () {
+			var img = document.getElementById("downloadImg");
+
+			var alink = document.createElement("a");
+
+			alink.href = img.src;
+			alink.download = 'xiazai'
+			alink.click();
+
 		})
 
-		$('#submit').on('click', () => {
-			var payType = $('#select').val();
-			var price = $('#priceText').val()
-			$('.dialog').show()
+		$("#submit").on("click", () => {
+			var payType = $("#select").val();
+			var price = $("#priceText").val()
+			$(".dialog").show()
+
 			$.ajax({
-				type: 'post',
-				url: '',
-				data: `type=${val}&price=${price}`,
+				type: "post",
+				url: "",
+				data: `type=${payType}&price=${price}`,
 				success(msg) {
+					// 输入框隐藏
+					$("#sec1").hide()
+					// 图片框显示
+					$("#sec2").show()
+
+
 					// type = 1 直接跳转
 					if (msg.data.type == 1) {
-						$('#sec1').replaceAll(msg.data.data)
+						// form替换图片框
+						$("#sec2").replaceAll(msg.data.data)
 					} else {
 						// 设置图片二维码路径
 						var imgUrl = msg.data.data
-						$('#downloadImg').attr('src', imgUrl)
+						$("#downloadImg").attr("src", imgUrl)
 
 						// 是否是支付宝, url不为空是支付宝
 						if (msg.data.url.length > 0) {
-							$('#purchase').show()
-							$('#purchase').attr('href', msg.data.url)
+							$("#purchase").show()
+							$("#purchase").attr("href", msg.data.url)
 						}
 					}
 
@@ -177,86 +193,10 @@
 
 				},
 				complete() {
-					$('.dialog').hide()
+					$(".dialog").hide()
 				}
 			})
 		})
-
-
-		mui.init({
-			gestureConfig: {
-				longtap: true//默认为false
-			}
-		});
-		mui.plusReady(function () {
-			document.addEventListener('longtap', function (e) {
-				var target = e.target;
-				savePic(target);
-			});
-		});
-		/**
-		 * 长按保存图片
-		 * 1. 获取图片链接
-		 * 2. 创建下载并下载图片
-		 * 3. 保存至相册
-		 */
-		function savePic(target) {
-			if (target.tagName == 'IMG' && target.currentSrc.length > 0 && target.id === 'image') { //确保图片链接不为空
-				console.log('s')
-				var imgUrl = target.src;
-				console.log('图片地址：' + imgUrl);
-				var suffix = cutImageSuffix(imgUrl);
-				mui.confirm("是否保存此图片", "", ["保存", "取消"], function (event) {
-					var index = event.index;
-					if (index == 0) {
-						/**
-						 * 创建下载任务
-						 * http://www.html5plus.org/doc/zh_cn/downloader.html#plus.downloader.createDownload
-						 */
-						var downLoader = plus.downloader.createDownload(imgUrl, {
-							method: 'GET',
-							filename: '_downloads/image' + suffix
-						}, function (download, status) {
-							var fileName = download.filename;
-							console.log('文件名:' + fileName);
-							console.log('下载状态：' + status);
-							/**
-							 * 保存至本地相册
-							 */
-							plus.gallery.save(fileName, function () {
-								/**
-								 * 保存后，弹出对话框是否查看；
-								 */
-								mui.confirm("打开相册查看", "", ["打开", "取消"], function (event) {
-									var gindex = event.index;
-									if (gindex == 0) {
-										/**
-										 * 选择图片
-										 */
-										plus.gallery.pick(function (file) {
-											mui.toast("你选择了图片：" + file);
-										}, function (error) {
-											console.log(JSON.stringify(error));
-										}, {
-
-											});
-									}
-								});
-							});
-						});
-						/**
-						 * 开始下载任务
-						 */
-						downLoader.start();
-					}
-				});
-			}
-		}
-		// 截取图片后缀用于重命名图片，防止%E5%85%89%E6%98%8E%E8%A1%8C编码的文件不被系统相册识别；
-		function cutImageSuffix(imageUrl) {
-			var index = imageUrl.lastIndexOf('.');
-			return imageUrl.substring(index);
-		}
 	</script>
 
 </body>
