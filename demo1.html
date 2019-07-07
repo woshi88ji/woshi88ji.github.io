@@ -1,258 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-	<title>账户充值</title>
-	<meta charset="UTF-8">
-	<meta content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"
-	 name="viewport">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<!-- <link rel="stylesheet" type="text/css" href="css/mui.min.css" /> -->
-	<!-- <script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script> -->
-</head>
-
-<style>
-	* {
-    padding: 0;
-    margin: 0;
-  }
-
-  body {
-    background-color: #fff;
-    background-attachment: fixed;
-    background-size: cover;
-    font-size: 14px;
-    font-family: Arial, Helvetica, "Microsoft Yahei", sans-serif
-  }
-
-  header {
-    text-align: center;
-    font-size: 24px;
-    height: 50px;
-    line-height: 50px;
-    /* background-color: orange; */
-    color: white
-  }
-
-  input {
-    height: 35px;
-    border-radius: 8px;
-    border: none;
-    width: 80%;
-    text-indent: 1em;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    vertical-align: middle
-  }
-
-  input:focus {
-    outline: none;
-    border-bottom-color: blue
-  }
-
-  input::placeholder {
-    text-align: center;
-  }
-
-  select {
-    height: 35px;
-    border-radius: 8px;
-    border: none;
-    width: 80%;
-    text-indent: 1em;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    text-align-last: center;
-  }
-
-  .content {
-    width: 80%;
-    text-align: center;
-    position: absolute;
-    left: 10%;
-    right: 10%;
-    top: 100px;
-    vertical-align: middle;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    border-radius: 20px;
-  }
-
-  .content p {
-    height: 50px;
-    line-height: 50px;
-  }
-
-  .price {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-  }
-
-  .price span {
-    display: inline-block
-  }
-
-  .btn {
-    font-size: 14px;
-    color: #fff;
-    display: inline-block;
-    height: 30px;
-    line-height: 30px;
-    padding: 0 10px;
-    border-radius: 8px;
-    background-color: red;
-    box-shadow: 0 0 10px rgba(255, 59, 0, 0.7);
-  }
-
-  .dialog {
-    position: absolute;
-    display: none;
-    background-color: black;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.4;
-    color: white
-  }
-
-  .dialog div {
-    position: absolute;
-    top: calc(50% - 20px);
-    height: 40px;
-    width: 100px;
-    line-height: 40px;
-    text-align: center;
-    left: calc(50% - 50px);
-  }
-  #downloadImg{width: 100%;border-radius: 20px;overflow: hidden; }
-</style>
-
-<body>
-	<header>支付订单</header>
-
-	<div class="content" id="sec1" hidden>
-		<div style="margin-top: 15px;padding-bottom: 15px;">
-			<h3>账户充值</h3>
-			<div class="price"><input type="number" placeholder="请输入支付金额" id="priceText"></input></div>
-			<div style="margin-top: 10px;">
-				<select id="select" class="js-example-basic-single">
-					<option value="" selected disabled>请选择支付方式</option>
-					<option value="wechat">微信</option>
-					<option value="alipay">支付宝</option>
-					<option value="union">银联扫码</option>
-					<option value="quick">快捷支付</option>
-				</select>
-			</div>
-			<p>
-				<span class="btn" id="submit" style="margin: 10px">确认</span>
-			</p>
-		</div>
-	</div>
-
-	<div class="content" id="sec2">
-		<img id="downloadImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562490396179&di=b9ed2ed6c9ab202a2ebd0270b973e32e&imgtype=0&src=http%3A%2F%2Fimg.mpaypass.com.cn%2Fimages%2F20170120090443.png">
-		<div style="width: 80%; margin: 20px auto; display: flex; justify-content: space-around">
-			<a class="btn" style="margin-right: 20px; " id="purchase" target="_blank">去支付</a>
-			<span class="btn download" download="qrcode">保存二维码</span>
-		</div>
-	</div>
-
-	<div class="dialog">
-		<div>加载中...</div>
-	</div>
-
-
+	<meta charset="utf-8">
+	<title>Downloader Example</title>
 	<script type="text/javascript">
-
+		// 扩展API加载完毕后调用onPlusReady回调函数 
 		document.addEventListener("plusready", onPlusReady, false);
 		var r = null;
 		// 扩展API加载完毕，现在可以正常调用扩展API 
 		function onPlusReady() {
 		}
-
-
-
-
-
-
-
-
-		// 点击下载按钮下载图片
-		$(".download").on("click", function () {
-			var src = $("#downloadImg").attr("src")
-			console.log(src)
-			saveImg(src)
-		})
-
-		$("#submit").on("click", () => {
-			var payType = $("#select").val();
-			var price = $("#priceText").val()
-			$(".dialog").show()
-
-			$.ajax({
-				type: "post",
-				url: "",
-				data: `type=${payType}&price=${price}`,
-				success(msg) {
-					// 输入框隐藏
-					$("#sec1").hide()
-					// 图片框显示
-					$("#sec2").show()
-
-
-					// type = 1 直接跳转
-					if (msg.data.type == 1) {
-						// form替换图片框
-						$("#sec2").replaceAll(msg.data.data)
-					} else {
-						// 设置图片二维码路径
-						var imgUrl = msg.data.data
-						$("#downloadImg").attr("src", imgUrl)
-
-						// 是否是支付宝, url不为空是支付宝
-						if (msg.data.url.length > 0) {
-							$("#purchase").show()
-							$("#purchase").attr("href", msg.data.url)
-						}
-					}
-
-				},
-				error(err) {
-
-				},
-				complete() {
-					$(".dialog").hide()
+		// 创建下载任务
+		function createDownload() {
+			var dtask = plus.downloader.createDownload("http://www.abc.com/a.doc", {}, function (d, status) {
+				// 下载完成
+				if (status == 200) {
+					alert("Download success: " + d.filename);
+				} else {
+					alert("Download failed: " + status);
 				}
-			})
-		})
-		function saveImg(imgUrl) {
-			var downLoader = plus.downloader.createDownload(imgUrl, {
-			}, function (download, status) {
-				var fileName = download.filename;
-				console.log('文件名:' + fileName);
-				console.log('下载状态：' + status);
-				/**
-				 * 保存至本地相册
-				 */
-				plus.gallery.save(fileName, function () {
-					/**
-					 * 保存后，弹出对话框是否查看；
-					 */
-					alert('baocun')
-				});
 			});
-			/**
-			 * 开始下载任务
-			 */
-			downLoader.start();
+			//dtask.addEventListener("statechanged", onStateChanged, false);
+			dtask.start();
 		}
-
-
 	</script>
+</head>
 
+<body>
+	<button id="download" onclick="createDownload()">Create download task</button>
 </body>
 
 </html>
