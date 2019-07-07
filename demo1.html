@@ -50,8 +50,8 @@
 								alert(2)
 							var fileName = download.filename;
 							alert(fileName)
-							console.log('文件名:' + fileName);
-							console.log('下载状态：' + status);
+							// console.log('文件名:' + fileName);
+							// console.log('下载状态：' + status);
 							/**
 							 * 保存至本地相册
 							 */
@@ -60,6 +60,7 @@
 							} else {
 								alert("Download failed: " + status);
 							} 
+							alert(9999)
 							plus.gallery.save(fileName, function () {
 								/**
 								 * 保存后，弹出对话框是否查看；
