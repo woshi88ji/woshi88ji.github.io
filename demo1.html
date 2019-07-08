@@ -286,7 +286,8 @@
 				var suffix = cutImageSuffix(url);
 
 				(function () {
-					
+					var result = confirm('是否保存图片')
+					if (result) {
 						var downLoader = plus.downloader.createDownload(url, {
 							method: 'GET',
 							filename: '_downloads/image' + new Date().getTime() + suffix
@@ -302,7 +303,7 @@
 
 						});
 						downLoader.start();
-					
+					}
 				})()
 			}
 		}
